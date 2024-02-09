@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "include/CreateGuildFS.hpp"
+#include "include/Logger.hpp"
 
 class Command
 {
@@ -22,7 +23,7 @@ public:
     void execute() override
     {
         createGuildStructure(projectName);
-        std::cout << "Initialization complete. Folder structure created for project: " << projectName << std::endl;
+        Logger::info("Initialization complete. Folder structure created for project: " + projectName);
     }
 };
 
@@ -31,11 +32,10 @@ class HelpCommand : public Command
 public:
     void execute() override
     {
-        // Implement the logic to display help information
-        std::cout << "Usage: guild [command] [options]\n"
-                  << "Commands:\n"
-                  << "  init [name]   Initialize a new project\n"
-                  << "  help          Display help information\n";
+        Logger::log("Usage: guild [command] [options]\n"
+                     "Commands:\n"
+                     "  init [name]   Initialize a new project\n"
+                     "  help          Display help information\n");
     }
 };
 
@@ -64,7 +64,7 @@ public:
         }
         else
         {
-            std::cout << "Invalid command: " << command << std::endl;
+            Logger::error("Invalid command: " + command);
         }
     }
 };
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        std::cout << "Usage: " << argv[0] << " [command] [options]" << std::endl;
+        Logger::error("Usage: " + std::string(argv[0]) + " [command] [options]");
     }
 
     return 0;
