@@ -2,6 +2,6 @@
 #include <filesystem>
 #include <fstream>
 
-#include "../dependencies/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 
 void createGuildStructure(const std::string &projectName);
