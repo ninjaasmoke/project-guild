@@ -1,9 +1,8 @@
 #include <iostream>
-#include "include/CreateGuildFS.hpp"
-
-#include <iostream>
 #include <unordered_map>
 #include <functional>
+
+#include "include/CreateGuildFS.hpp"
 
 class Command
 {
