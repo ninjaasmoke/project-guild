@@ -28,7 +28,7 @@ void createSubfolders(const std::string &rootPath)
 
 void createDepJson(const std::string &rootPath, const std::string &projectName)
 {
-    // Initialize and populate dep.guild.json
+    // Initialize and populate guild.json
     json depJson;
     depJson["project_name"] = projectName;
     depJson["version"] = "1.0.0";
@@ -39,7 +39,7 @@ void createDepJson(const std::string &rootPath, const std::string &projectName)
     compile.push_back("src");
     depJson["compile"] = compile;
 
-    std::ofstream depFile(rootPath + "/dep.guild.json");
+    std::ofstream depFile(rootPath + "/guild.json");
     depFile << std::setw(4) << depJson << std::endl;
     depFile.close();
 }
