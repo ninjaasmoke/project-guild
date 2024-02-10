@@ -29,11 +29,15 @@ void createSubfolders(const std::string &rootPath)
 void createDepJson(const std::string &rootPath, const std::string &projectName)
 {
     // Initialize and populate dep.guild.json
-    nlohmann::json depJson;
+    json depJson;
     depJson["project_name"] = projectName;
     depJson["version"] = "1.0.0";
-    depJson["comments"] = "comments";
+    depJson["comments"] = "hello darkness my old friend...";
     depJson["dependencies"] = json::array();
+    json::array_t compile = json::array();
+    compile.push_back("include");
+    compile.push_back("src");
+    depJson["compile"] = compile;
 
     std::ofstream depFile(rootPath + "/dep.guild.json");
     depFile << std::setw(4) << depJson << std::endl;
