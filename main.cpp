@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <functional>
 
+#include "include/GetCurrentFolder.hpp"
 #include "include/CreateGuildFS.hpp"
 #include "include/Logger.hpp"
 
@@ -23,7 +24,11 @@ public:
     void execute() override
     {
         createGuildStructure(projectName);
-        Logger::info("Initialization complete. Folder structure created for project: " + projectName);
+        if (projectName.empty())
+        {
+            projectName = getCurrentFolder();
+        }
+        Logger::info("Guild created for project: " + projectName);
     }
 };
 
@@ -32,10 +37,10 @@ class HelpCommand : public Command
 public:
     void execute() override
     {
-        Logger::log("Usage: guild [command] [options]\n"
-                     "Commands:\n"
-                     "  init [name]   Initialize a new project\n"
-                     "  help          Display help information\n");
+        Logger::log("\nUsage: guild [command] [options]\n"
+                    "Commands:\n"
+                    "  init [name]   Initialize a new project\n"
+                    "  help          Display help information\n");
     }
 };
 
@@ -83,6 +88,7 @@ int main(int argc, char *argv[])
     else
     {
         Logger::error("Usage: " + std::string(argv[0]) + " [command] [options]");
+        commandInvoker.executeCommand("help", "");
     }
 
     return 0;

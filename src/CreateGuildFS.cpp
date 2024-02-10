@@ -57,7 +57,7 @@ void createGuildStructure(const std::string &projectName)
     // If no project name is provided, use the current folder name
     if (projectName.empty())
     {
-        std::string currentFolder = fs::current_path().filename().string();
+        std::string currentFolder = getCurrentFolder();
         createProjectStructure("./", currentFolder);
     }
     else
