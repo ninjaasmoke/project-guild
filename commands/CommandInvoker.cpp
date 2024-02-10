@@ -5,7 +5,6 @@
 
 CommandInvoker::CommandInvoker()
 {
-
     commands["init"] = std::make_unique<InitCommand>("");
     commands["help"] = std::make_unique<HelpCommand>();
 }
