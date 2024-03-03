@@ -2,4 +2,5 @@
 
 void BuildCommand::execute()
 {
+    cleanBuild();
 }
