@@ -1,12 +1,14 @@
 #include "CommandInvoker.hpp"
 #include "InitCommand.hpp"
 #include "HelpCommand.hpp"
+#include "BuildCommand.hpp"
 #include "Logger.hpp"
 
 CommandInvoker::CommandInvoker()
 {
     commands["init"] = std::make_unique<InitCommand>("");
     commands["help"] = std::make_unique<HelpCommand>();
+    commands["build"] = std::make_unique<BuildCommand>();
 }
 
 void CommandInvoker::executeCommand(const std::string &command, const std::string &argument)
