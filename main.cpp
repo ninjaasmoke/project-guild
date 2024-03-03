@@ -1,12 +1,12 @@
-#include <iostream>
 #include <unordered_map>
 #include <functional>
 
 #include "include/GetCurrentFolder.hpp"
 #include "include/CreateGuildFS.hpp"
 #include "include/Logger.hpp"
-#include "commands/Command.hpp"
+
 #include "commands/CommandInvoker.hpp"
+#include "commands/Command.hpp"
 
 int main(int argc, char *argv[])
 {
