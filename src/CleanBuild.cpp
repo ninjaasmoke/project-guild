@@ -49,7 +49,8 @@ void cleanBuild()
     }
     else
     {
-        command = "g++ -std=c++17 -Iinclude src/*.cpp main.cpp -o .bin/main -mconsole";
+        // command = "g++ -std=c++17 -Iinclude src/*.cpp main.cpp -o .bin/main -mconsole";
+        command = "g++ -std=c++17 -Iinclude src/*.cpp src/*.c main.cpp -o .bin/main -mconsole";
     }
 
     Logger::log("Building project...");
