@@ -9,7 +9,7 @@ void cleanBuild()
 
     if (!file.is_open())
     {
-        Logger::log("Error: No guild.json file found in the current directory");
+        Logger::error("Error: No guild.json file found in the current directory");
         return;
     }
 
