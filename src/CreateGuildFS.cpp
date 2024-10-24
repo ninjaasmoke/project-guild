@@ -20,7 +20,7 @@ void createRootFolder(const std::string &rootPath)
 void createSubfolders(const std::string &rootPath)
 {
     // Create subfolders within the root folder
-    for (const std::string &subfolder : {"dependencies", "include", ".build", "src", ".bin"})
+    for (const std::string &subfolder : {"packages", "include", "resources", ".build", "src", ".bin"})
     {
         std::filesystem::create_directory(rootPath + "/" + subfolder);
     }
