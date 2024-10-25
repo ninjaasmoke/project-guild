@@ -1,7 +1,7 @@
 #include "CreateGuildFS.hpp"
 
 namespace fs = std::filesystem;
-using json = nlohmann::json;
+using json = nlohmann::ordered_json;
 
 const std::string INCLUDE_DIR = "include";
 const std::string SRC_DIR = "src";
