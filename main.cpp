@@ -5,8 +5,8 @@
 #include "include/CreateGuildFS.hpp"
 #include "include/Logger.hpp"
 
-#include "commands/CommandInvoker.hpp"
-#include "commands/Command.hpp"
+#include "include/CommandInvoker.hpp"
+#include "include/Command.hpp"
 
 int main(int argc, char *argv[])
 {
