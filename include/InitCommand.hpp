@@ -11,5 +11,5 @@ private:
 public:
     InitCommand(const std::string &projectName);
 
-    void execute() override;
+    void execute(std::optional<std::string> argument = std::nullopt) override;
 };

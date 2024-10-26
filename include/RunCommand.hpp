@@ -9,5 +9,5 @@
 class RunCommand : public Command
 {
 public:
-    void execute() override;
+    void execute(std::optional<std::string> argument = std::nullopt) override;
 };

@@ -3,7 +3,7 @@
 
 InitCommand::InitCommand(const std::string &projectName) : projectName(projectName) {}
 
-void InitCommand::execute()
+void InitCommand::execute(std::optional<std::string> argument)
 {
     createGuildStructure(projectName);
     if (projectName.empty())

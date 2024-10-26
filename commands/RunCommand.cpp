@@ -1,6 +1,6 @@
 #include "RunCommand.hpp"
 
-void RunCommand::execute()
+void RunCommand::execute(std::optional<std::string> argument)
 {
 
     std::ifstream file("./.bin/main.exe");

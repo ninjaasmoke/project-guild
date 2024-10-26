@@ -1,6 +1,6 @@
 #include "HelpCommand.hpp"
 
-void HelpCommand::execute()
+void HelpCommand::execute(std::optional<std::string> argument)
 {
     Logger::log("\nUsage: guild [command] [options]\n"
                 "Commands:\n"

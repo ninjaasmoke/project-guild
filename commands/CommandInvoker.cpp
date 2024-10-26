@@ -11,6 +11,7 @@ CommandInvoker::CommandInvoker()
     commands["help"] = std::make_unique<HelpCommand>();
     commands["build"] = std::make_unique<BuildCommand>();
     commands["run"] = std::make_unique<RunCommand>();
+    commands["add"] = std::make_unique<RunCommand>();
 }
 
 void CommandInvoker::executeCommand(const std::string &command, const std::string &argument)
