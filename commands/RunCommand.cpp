@@ -19,7 +19,7 @@ void RunCommand::execute()
 
     if (result == 0)
     {
-        Logger::log("Run successful!");
+        Logger::info("Run successful!");
     }
     else
     {
