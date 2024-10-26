@@ -32,6 +32,7 @@ FlagMap parseFlags(int argc, char *argv[])
 
             flags[flagName] = Flag{flagName, value, hasValue};
         }
+        // TODO: add single hyphen flag
     }
 
     return flags;
