@@ -15,18 +15,6 @@ int main(int argc, char *argv[])
 
     const FlagMap flags = parseFlags(argc, argv);
 
-    for (const auto &[name, flag] : flags)
-    {
-        if (flag.hasValue)
-        {
-            Logger::info("Flag: " + name + " = " + flag.value);
-        }
-        else
-        {
-            Logger::info("Flag: " + name + " (no value)");
-        }
-    }
-
     /*
         // Safer way to check for and use flags
         if (flags.count("--config")) {
@@ -43,21 +31,21 @@ int main(int argc, char *argv[])
     if (argc >= 2)
     {
         std::string command = argv[1];
-        std::string argument = (argc == 3) ? argv[2] : "";
+        std::string argument = (argc >= 3) ? argv[2] : "";
 
-        if (flags.find("--verbose") != flags.end())
-        {
-            std::cout << "Verbose mode enabled" << std::endl;
-        }
+        // if (flags.find("--verbose") != flags.end())
+        // {
+        //     std::cout << "Verbose mode enabled" << std::endl;
+        // }
 
         Logger::info("Executing: " + command);
 
-        commandInvoker.executeCommand(command, argument);
+        commandInvoker.executeCommand(command, argument, flags);
     }
     else
     {
         Logger::error("Usage: " + std::string(argv[0]) + " [command] [options]");
-        commandInvoker.executeCommand("help", "");
+        commandInvoker.executeCommand("help", "", flags);
     }
 
     return 0;
