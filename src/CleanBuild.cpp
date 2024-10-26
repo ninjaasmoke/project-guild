@@ -59,7 +59,7 @@ void cleanBuild()
 
     if (result == 0)
     {
-        Logger::log("Build successful");
+        Logger::info("Build successful");
     }
     else
     {
