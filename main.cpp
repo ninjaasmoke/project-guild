@@ -8,28 +8,43 @@
 #include "include/CommandInvoker.hpp"
 #include "include/Command.hpp"
 
-std::map<std::string, std::string> parseFlags(int argc, char *argv[])
+struct Flag
 {
-    std::map<std::string, std::string> flags;
+    std::string name;
+    std::string value;
+    bool hasValue; // Explicitly track if flag has a value
+};
 
+std::map<std::string, Flag> parseFlags(int argc, char *argv[])
+{
+    std::map<std::string, Flag> flags;
+
+    // Skip program name (argv[0])
     for (int i = 1; i < argc; ++i)
     {
+        // Prevent buffer overruns by checking string validity
+        if (!argv[i])
+            continue;
+
         std::string arg = argv[i];
+        if (arg.empty())
+            continue;
+
         if (arg.find("--") == 0)
-        { // Long flag (e.g., --option)
-            if (i + 1 < argc && !std::string(argv[i + 1]).find("-"))
+        { // Long flag
+            std::string flagName = arg;
+            std::string value;
+            bool hasValue = false;
+
+            // Check if next argument exists and is a value (not a flag)
+            if (i + 1 < argc && argv[i + 1] && argv[i + 1][0] != '-')
             {
-                flags[arg] = argv[i + 1]; // Associate flag with its value
-                ++i;                      // Skip the next argument since it's the value
+                value = argv[i + 1];
+                hasValue = true;
+                ++i; // Skip the value in next iteration
             }
-            else
-            {
-                flags[arg] = ""; // Flag without a value
-            }
-        }
-        else if (arg.find("-"))
-        {                    // Short flag (e.g., -o)
-            flags[arg] = ""; // You can extend this to handle short flags with values
+
+            flags[flagName] = Flag{flagName, value, hasValue};
         }
     }
 
@@ -41,6 +56,31 @@ int main(int argc, char *argv[])
     CommandInvoker commandInvoker;
 
     auto flags = parseFlags(argc, argv);
+
+    for (const auto &[name, flag] : flags)
+    {
+        if (flag.hasValue)
+        {
+            Logger::info("Flag: " + name + " = " + flag.value);
+        }
+        else
+        {
+            Logger::info("Flag: " + name + " (no value)");
+        }
+    }
+
+    /*
+        // Safer way to check for and use flags
+        if (flags.count("--config")) {
+            const auto& flag = flags["--config"];
+            if (flag.hasValue) {
+                // Use flag.value
+            } else {
+                Logger::error("--config requires a value");
+                return 1;  // or handle error appropriately
+            }
+        }
+    */
 
     if (argc >= 2)
     {
