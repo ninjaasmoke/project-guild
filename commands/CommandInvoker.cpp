@@ -14,7 +14,7 @@ CommandInvoker::CommandInvoker()
     commands["add"] = std::make_unique<RunCommand>();
 }
 
-void CommandInvoker::executeCommand(const std::string &command, const std::string &argument)
+void CommandInvoker::executeCommand(const std::string &command, const std::string &argument, const FlagMap &flags)
 {
     if (commands.find(command) != commands.end())
     {
@@ -23,6 +23,21 @@ void CommandInvoker::executeCommand(const std::string &command, const std::strin
             Logger::info("Arguement: " + argument);
             // If argument is provided, update the corresponding command
             // commands[command] = std::make_unique<InitCommand>(argument);
+        }
+        if (!flags.empty())
+        {
+
+            for (const auto &[name, flag] : flags)
+            {
+                if (flag.hasValue)
+                {
+                    Logger::info("Flag: " + name + " = " + flag.value);
+                }
+                else
+                {
+                    Logger::info("Flag: " + name + " (no value)");
+                }
+            }
         }
         commands[command]->execute();
     }
