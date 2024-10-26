@@ -19,10 +19,9 @@ void CommandInvoker::executeCommand(const std::string &command, const std::strin
     {
         if (!argument.empty())
         {
-            Logger::info("Executing: " + command);
             Logger::info("Arguement: " + argument);
             // If argument is provided, update the corresponding command
-            commands[command] = std::make_unique<InitCommand>(argument);
+            // commands[command] = std::make_unique<InitCommand>(argument);
         }
         commands[command]->execute();
     }
