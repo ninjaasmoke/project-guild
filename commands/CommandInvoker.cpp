@@ -39,7 +39,7 @@ void CommandInvoker::executeCommand(const std::string &command, const std::strin
                 }
             }
         }
-        commands[command]->execute();
+        commands[command]->execute(argument, flags);
     }
     else
     {
