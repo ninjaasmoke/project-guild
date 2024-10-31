@@ -7,5 +7,5 @@
 class BuildCommand : public Command
 {
 public:
-    void execute(std::optional<std::string> argument = std::nullopt) override;
+    void execute(std::optional<std::string> argument = std::nullopt, std::optional<FlagMap> flags = std::nullopt) override;
 };
