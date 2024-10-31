@@ -34,9 +34,9 @@ all: create_dirs $(TARGET)
 
 # Create necessary directories
 create_dirs:
-	@mkdir -p $(BUILDDIR)
-	@mkdir -p $(OBJDIR)/$(SRCDIR)
-	@mkdir -p $(OBJDIR)/$(CMDDIR)
+	@if not exist "$(BUILDDIR)" mkdir "$(BUILDDIR)"
+	@if not exist "$(OBJDIR)\$(SRCDIR)" mkdir "$(OBJDIR)\$(SRCDIR)"
+	@if not exist "$(OBJDIR)\$(CMDDIR)" mkdir "$(OBJDIR)\$(CMDDIR)"
 
 # Link the final executable
 $(TARGET): $(MAINOBJ) $(OBJ) $(CMDOBJ)
@@ -59,7 +59,8 @@ $(OBJDIR)/$(CMDDIR)/%.o: $(CMDDIR)/%.cpp
 
 # Clean build files
 clean:
-	rm -rf $(OBJDIR) $(TARGET)
+	@if exist "$(OBJDIR)" rmdir /s /q "$(OBJDIR)"
+	@if exist "$(TARGET)" del "$(TARGET)"
 
 # Clean and rebuild
 rebuild: clean all
