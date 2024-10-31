@@ -1,6 +1,6 @@
 #include "HelpCommand.hpp"
 
-void HelpCommand::execute(std::optional<std::string> argument)
+void HelpCommand::execute(std::optional<std::string> argument, std::optional<FlagMap> flags)
 {
     Logger::log("\nUsage: guild [command] [options]\n"
                 "Commands:\n"
