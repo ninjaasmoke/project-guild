@@ -1,5 +1,8 @@
 #pragma once
+
 #include "Command.hpp"
+#include "Flags.h"
+
 #include <unordered_map>
 #include <memory>
 
@@ -11,5 +14,5 @@ private:
 public:
     CommandInvoker();
 
-    void executeCommand(const std::string &command, const std::string &argument);
+    void executeCommand(const std::string &command, const std::string &argument, const FlagMap &flags);
 };

@@ -1,6 +1,12 @@
 #include "RunCommand.hpp"
 
-void RunCommand::execute()
+#ifdef __CYGWIN__
+std::string command = "./.bin/main.exe"; // Unix-style path for Cygwin
+#else
+std::string command = ".bin\\main.exe"; // Windows-style path
+#endif
+
+void RunCommand::execute(std::optional<std::string> argument, std::optional<FlagMap> flags)
 {
 
     std::ifstream file("./.bin/main.exe");
@@ -10,8 +16,6 @@ void RunCommand::execute()
         Logger::error("Error: No  executable found! Have you tried `guild build`?");
         return;
     }
-
-    std::string command = ".bin\\main.exe";  // Use Windows path format :: TODO: system agnostic
 
     Logger::log("Running project...");
 
