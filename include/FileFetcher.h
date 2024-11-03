@@ -2,6 +2,7 @@
 #define FILEFETCHER_H
 
 #include "Logger.hpp"
+#include "cpp-httplib/httplib.h"
 
 #include <string>
 #include <optional>
