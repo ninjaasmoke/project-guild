@@ -1,6 +1,7 @@
 # Compiler settings
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17 -MMD -MP
+LDFLAGS = -lWs2_32
 
 # Directories
 SRCDIR = src
@@ -40,7 +41,7 @@ create_dirs:
 
 # Link the final executable
 $(TARGET): $(MAINOBJ) $(OBJ) $(CMDOBJ)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 # Compile main source file
 $(OBJDIR)/%.o: %.cpp
