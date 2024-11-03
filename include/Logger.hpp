@@ -11,7 +11,7 @@ public:
     {
         INFO,
         WARNING,
-        ERROR
+        ERR
     };
 
     static void info(const std::string &message);
