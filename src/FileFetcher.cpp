@@ -1,4 +1,4 @@
-// #include "cpp-httplib/httplib.h"
+#include "cpp-httplib/httplib.h"
 #include "FileFetcher.h"
 #include <fstream>
 #include <cstdio>
