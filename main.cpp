@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         //     std::cout << "Verbose mode enabled" << std::endl;
         // }
 
-        Logger::info("Executing: " + command);
+        // Logger::info("Executing: " + command);
 
         commandInvoker.executeCommand(command, argument, flags);
     }
