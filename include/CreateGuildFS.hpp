@@ -10,6 +10,7 @@
 
 
 #include "GetCurrentFolder.hpp"
+#include "MakefileGenerator.h"
 #include "nlohmann/json.hpp"
 
 void createGuildStructure(const std::string &projectName);
