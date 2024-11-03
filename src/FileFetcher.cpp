@@ -1,4 +1,3 @@
-#include "cpp-httplib/httplib.h"
 #include "FileFetcher.h"
 #include <fstream>
 #include <cstdio>
@@ -26,26 +25,24 @@ bool FileFetcher::fetchAndSave(const std::string &filePath)
 
 std::optional<std::string> FileFetcher::fetchFileContent()
 {
-    // httplib::Client cli(url_.c_str());
-    // cli.set_follow_location(true);
+    httplib::Client cli(url_.c_str());
+    cli.set_follow_location(true);
 
-    // auto res = cli.Get("/");
-    // if (!res)
-    // {
-    //     Logger::error("Failed to make a request to the server.");
-    //     return std::nullopt;
-    // }
+    auto res = cli.Get("/");
+    if (!res)
+    {
+        Logger::error("Failed to make a request to the server.");
+        return std::nullopt;
+    }
 
-    // if (res->status != 200)
-    // {
-    //     Logger::error("Non-200 status code received: " + std::to_string(res->status));
-    //     return std::nullopt;
-    // }
+    if (res->status != 200)
+    {
+        Logger::error("Non-200 status code received: " + std::to_string(res->status));
+        return std::nullopt;
+    }
 
-    // Logger::info("File content fetched successfully.");
-    // return res->body;
-
-    return "";
+    Logger::info("File content fetched successfully.");
+    return res->body;
 }
 
 bool FileFetcher::writeToFile(const std::string &content, const std::string &filePath)
