@@ -12,7 +12,7 @@ void Logger::warn(const std::string &message)
 
 void Logger::error(const std::string &message)
 {
-    log(LogLevel::ERROR, message);
+    log(LogLevel::ERR, message);
 }
 
 void Logger::log(const std::string &message)
@@ -30,7 +30,7 @@ void Logger::log(LogLevel level, const std::string &message)
     case LogLevel::WARNING:
         printColoredMessage("\033[1;33m" + message + "\033[0m"); // Yellow
         break;
-    case LogLevel::ERROR:
+    case LogLevel::ERR:
         printColoredMessage("\033[1;31m" + message + "\033[0m"); // Red
         break;
     default:
