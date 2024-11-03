@@ -16,29 +16,21 @@ namespace utils
          */
         inline bool isValidHttpUrl(const std::string &url)
         {
-            // Check if string is empty
             if (url.empty())
             {
                 return false;
             }
 
-            // Regular expression for HTTP/HTTPS URL validation
-            static const std::regex urlPattern(
-                R"(^(http|https):\/\/"  // Protocol
-        "([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}"  // Domain name
-        "(:[0-9]{1,5})?"        // Optional port
-        "(\/[a-zA-Z0-9\-._~:/?#\[\]@!$&'()*+,;=]*)?"  // Optional path and query
-        "$)",
+            const std::regex urlPattern(
+                R"(^(http|https):\/\/([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}(:[0-9]{1,5})?(\/[a-zA-Z0-9\-._~:/?#\[\]@!$&'()*+,;=]*)?$)",
                 std::regex::icase);
 
             try
             {
-                // Attempt to match the URL against the pattern
                 return std::regex_match(url, urlPattern);
             }
             catch (const std::regex_error &e)
             {
-                // Handle any regex matching errors
                 return false;
             }
         }
