@@ -1,7 +1,9 @@
 # Compiler settings
+SSL_DIR = C:/Program Files/OpenSSL-Win64
+
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -MMD -MP
-LDFLAGS = -lWs2_32
+CXXFLAGS = -Wall -Wextra -std=c++17 -MMD -MP -DCPPHTTPLIB_OPENSSL_SUPPORT
+LDFLAGS = -lWs2_32 -L"$(SSL_DIR)/lib" -lssl -lcrypto
 
 # Directories
 SRCDIR = src
@@ -28,7 +30,7 @@ MAINOBJ = $(MAINSRC:%.cpp=$(OBJDIR)/%.o)
 DEPS = $(OBJ:.o=.d) $(CMDOBJ:.o=.d) $(MAINOBJ:.o=.d)
 
 # Include directories
-INCLUDES = -I./$(DEPDIR) -I./$(INCDIR)
+INCLUDES = -I./$(DEPDIR) -I./$(INCDIR) -I"$(SSL_DIR)/include"
 
 # Default target
 all: create_dirs $(TARGET)
