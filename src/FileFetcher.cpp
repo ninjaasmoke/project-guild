@@ -1,48 +1,74 @@
 #include "FileFetcher.h"
-#include <fstream>
-#include <cstdio>
 
 FileFetcher::FileFetcher(const std::string &url) : url_(url) {}
 
-bool FileFetcher::fetchAndSave(const std::string &filePath)
+std::pair<std::string, std::string> FileFetcher::parseUrl(const std::string &url)
 {
-    auto content = fetchFileContent();
-    if (!content)
-    {
-        Logger::error("Failed to fetch content from the URL.");
-        return false;
-    }
+    std::regex urlRegex("^(https?://)?([^/]+)(/.*)?$");
+    std::smatch matches;
 
-    if (!writeToFile(*content, filePath))
+    if (std::regex_match(url, matches, urlRegex))
     {
-        Logger::error("Failed to write content to the specified file.");
-        return false;
+        std::string host = matches[2].str();
+        std::string path = matches[3].length() > 0 ? matches[3].str() : "/";
+        return {host, path};
     }
-
-    Logger::info("File fetched and saved successfully.");
-    return true;
+    return {"", ""};
 }
 
 std::optional<std::string> FileFetcher::fetchFileContent()
 {
-    httplib::Client cli(url_.c_str());
-    cli.set_follow_location(true);
-
-    auto res = cli.Get("/");
-    if (!res)
+    auto [host, path] = parseUrl(url_);
+    if (host.empty())
     {
-        Logger::error("Failed to make a request to the server.");
+        Logger::error("Invalid URL format");
         return std::nullopt;
     }
 
-    if (res->status != 200)
-    {
-        Logger::error("Non-200 status code received: " + std::to_string(res->status));
-        return std::nullopt;
-    }
+    bool isHttps = url_.substr(0, 8) == "https://";
 
-    Logger::info("File content fetched successfully.");
-    return res->body;
+    if (isHttps)
+    {
+        httplib::SSLClient cli(host);
+        cli.set_follow_location(true);
+        auto res = cli.Get(path.c_str());
+
+        if (!res)
+        {
+            Logger::error("Failed to make a request to the server.");
+            return std::nullopt;
+        }
+
+        if (res->status != 200)
+        {
+            Logger::error("Non-200 status code received: " + std::to_string(res->status));
+            return std::nullopt;
+        }
+
+        Logger::info("File content fetched successfully.");
+        return res->body;
+    }
+    else
+    {
+        httplib::Client cli(host);
+        cli.set_follow_location(true);
+        auto res = cli.Get(path.c_str());
+
+        if (!res)
+        {
+            Logger::error("Failed to make a request to the server.");
+            return std::nullopt;
+        }
+
+        if (res->status != 200)
+        {
+            Logger::error("Non-200 status code received: " + std::to_string(res->status));
+            return std::nullopt;
+        }
+
+        Logger::info("File content fetched successfully.");
+        return res->body;
+    }
 }
 
 bool FileFetcher::writeToFile(const std::string &content, const std::string &filePath)
@@ -53,21 +79,35 @@ bool FileFetcher::writeToFile(const std::string &content, const std::string &fil
         Logger::error("Failed to open file: " + filePath);
         return false;
     }
-
     outfile << content;
     if (!outfile)
     {
         Logger::error("Error writing content to file: " + filePath);
         return false;
     }
-
     outfile.close();
     if (outfile.fail())
     {
         Logger::error("Failed to close file after writing: " + filePath);
         return false;
     }
-
     Logger::info("Content written to file successfully.");
+    return true;
+}
+
+bool FileFetcher::fetchAndSave(const std::string &filePath)
+{
+    auto content = fetchFileContent();
+    if (!content)
+    {
+        Logger::error("Failed to fetch content from the URL.");
+        return false;
+    }
+    if (!writeToFile(*content, filePath))
+    {
+        Logger::error("Failed to write content to the specified file.");
+        return false;
+    }
+    Logger::info("File fetched and saved successfully.");
     return true;
 }
