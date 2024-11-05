@@ -1,10 +1,15 @@
 #ifndef FILEFETCHER_H
 #define FILEFETCHER_H
 
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+
 #include "Logger.hpp"
 #include "cpp-httplib/httplib.h"
 
 #include <string>
+#include <regex>
+#include <fstream>
+#include <cstdio>
 #include <optional>
 
 class FileFetcher
@@ -23,6 +28,9 @@ private:
 
     // Private method to write content to a file
     bool writeToFile(const std::string &content, const std::string &filePath);
+
+    // Private method to parseUrl
+    std::pair<std::string, std::string> parseUrl(const std::string &url); // Corrected line
 };
 
 #endif // FILEFETCHER_H
