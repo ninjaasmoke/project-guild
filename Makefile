@@ -3,7 +3,7 @@ SSL_DIR = C:/Program Files/OpenSSL-Win64
 
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17 -MMD -MP -DCPPHTTPLIB_OPENSSL_SUPPORT
-LDFLAGS = -lWs2_32 -L"$(SSL_DIR)/lib" -lssl -lcrypto
+LDFLAGS = -lWs2_32 -L"$(SSL_DIR)/lib" -lssl -lcrypto -lcrypt32
 
 # Directories
 SRCDIR = src
