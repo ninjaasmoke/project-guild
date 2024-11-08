@@ -18,6 +18,8 @@ public:
     // Public method to fetch and save the file
     bool fetchAndSave(const std::string &filePath);
 
+    std::string getFilename() const;
+
 private:
     std::string url_;
 
