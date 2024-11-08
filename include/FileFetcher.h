@@ -1,8 +1,6 @@
 #ifndef FILEFETCHER_H
 #define FILEFETCHER_H
 
-#define CPPHTTPLIB_OPENSSL_SUPPORT
-
 #include "Logger.hpp"
 #include "cpp-httplib/httplib.h"
 
