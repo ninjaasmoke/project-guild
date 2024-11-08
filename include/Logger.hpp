@@ -10,13 +10,15 @@ public:
     enum class LogLevel
     {
         INFO,
+        GOOD,
         WARNING,
-        ERROR
+        ERR
     };
 
     static void info(const std::string &message);
     static void warn(const std::string &message);
     static void error(const std::string &message);
+    static void good(const std::string &message);
     static void log(const std::string &message);
 
 private:

@@ -15,37 +15,45 @@ void createProjectStructure(const std::filesystem::path &rootPath, const std::st
 {
     if (!createRootFolder(rootPath))
     {
-        std::cerr << "Failed to create root folder.\n";
+        Logger::error("Failed to create root folder.\n");
         return;
     }
 
     if (!createSubfolders(rootPath))
     {
-        std::cerr << "Failed to create subfolders.\n";
+        Logger::error("Failed to create subfolders.\n");
         return;
     }
 
     if (!createDepJson(rootPath, projectName))
     {
-        std::cerr << "Failed to create dep.json.\n";
+        Logger::error("Failed to create dep.json.\n");
         return;
     }
 
     if (!createSampleHeaderFiles(rootPath))
     {
-        std::cerr << "Failed to create sample header files.\n";
+        Logger::error("Failed to create sample header files.\n");
         return;
     }
 
     if (!createSampleSourceFiles(rootPath))
     {
-        std::cerr << "Failed to create sample source files.\n";
+        Logger::error("Failed to create sample source files.\n");
         return;
     }
 
     if (!createMainCpp(rootPath, projectName))
     {
-        std::cerr << "Failed to create main.cpp.\n";
+        Logger::error("Failed to create main.cpp.\n");
+        return;
+    }
+    
+
+    if (!MakefileGenerator::make(fs::current_path()))
+    {
+        Logger::error("Failed to create make file\n");
+        Logger::info("Current working directory: " + fs::current_path().string());
         return;
     }
 
