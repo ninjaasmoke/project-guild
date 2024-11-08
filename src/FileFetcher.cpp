@@ -103,7 +103,8 @@ bool FileFetcher::fetchAndSave(const std::string &packageFolderPath)
         Logger::error("Failed to fetch content from the URL.");
         return false;
     }
-    const std::string filePath = packageFolderPath + "testfile";
+    const std::string fileName = getFilename();
+    const std::string filePath = packageFolderPath + "/" + fileName;
     if (!writeToFile(*content, filePath))
     {
         Logger::error("Failed to write content to the specified file.");
@@ -111,4 +112,45 @@ bool FileFetcher::fetchAndSave(const std::string &packageFolderPath)
     }
     Logger::info("File fetched and saved successfully.");
     return true;
+}
+
+std::string extractFilename(const std::string &url)
+{
+    // Find the last '/' character
+    size_t lastSlash = url.find_last_of('/');
+    if (lastSlash == std::string::npos)
+    {
+        return "";
+    }
+
+    // Return everything after the last '/'
+    return url.substr(lastSlash + 1);
+}
+
+bool isHeaderFile(const std::string &filename)
+{
+    // common header file extensions
+    static const std::vector<std::string> headerExtensions = {
+        ".h", ".hpp", ".hxx", ".h++", ".hh"};
+
+    for (const auto &ext : headerExtensions)
+    {
+        if (filename.length() > ext.length() &&
+            filename.substr(filename.length() - ext.length()) == ext)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::string FileFetcher::getFilename() const
+{
+    std::string filename = extractFilename(url_);
+    if (filename.empty() || !isHeaderFile(filename))
+    {
+        Logger::error("Unknown file type!");
+        return "unknown.bak"; // throw an xception based on your error handling strategy
+    }
+    return filename;
 }
