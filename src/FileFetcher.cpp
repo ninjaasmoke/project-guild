@@ -95,7 +95,7 @@ bool FileFetcher::writeToFile(const std::string &content, const std::string &fil
     return true;
 }
 
-bool FileFetcher::fetchAndSave(const std::string &filePath)
+bool FileFetcher::fetchAndSave(const std::string &packageFolderPath)
 {
     auto content = fetchFileContent();
     if (!content)
@@ -103,6 +103,7 @@ bool FileFetcher::fetchAndSave(const std::string &filePath)
         Logger::error("Failed to fetch content from the URL.");
         return false;
     }
+    const std::string filePath = packageFolderPath + "testfile";
     if (!writeToFile(*content, filePath))
     {
         Logger::error("Failed to write content to the specified file.");
