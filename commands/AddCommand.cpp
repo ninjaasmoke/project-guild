@@ -17,14 +17,14 @@ void AddCommand::execute(std::optional<std::string> argument, std::optional<Flag
     }
 
     // Ensure the packages directory exists
-    std::string packagePath = fs::current_path().string() + "/packages";
-    if (!fs::exists(packagePath))
+    std::string packageFolderPath = fs::current_path().string() + "/packages";
+    if (!fs::exists(packageFolderPath))
     {
-        fs::create_directories(packagePath);
+        fs::create_directories(packageFolderPath);
     }
 
     FileFetcher fileFetcher(url);
-    if (!fileFetcher.fetchAndSave(packagePath))
+    if (!fileFetcher.fetchAndSave(packageFolderPath))
     {
         Logger::error("Failed to add resource!");
         return;
